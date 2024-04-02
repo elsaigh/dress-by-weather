@@ -5,11 +5,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/styles/main.css">
-  <title>I'm Bored</title>
+  <title>Dress By Weather</title>
 </head>
 
 <body>
-  <p><%=locals.data%></p>
+  <% if (locals) { %>
+    <p><%=locals.temp%></p>
+    <p><%=locals.wear%></p>
+  <% } %>
 </body>
 
 </html>

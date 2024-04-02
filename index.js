@@ -1,27 +1,37 @@
-import express from "express";
-import bodyParser from "body-parser";
-import axios from "axios";
+import express from "express"
+import bodyParser from "body-parser"
+import axios from "axios"
 import 'dotenv/config'
 
-const app = express();
-const port = 3000;
+const app = express()
+const port = 3000
 
 const key = process.env.API_KEY
 
-app.use(express.static("public"));
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static("public"))
+app.use(bodyParser.urlencoded({ extended: true }))
 
 app.get("/", async (req, res) => {
   try {
-    const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?units=metric&lat=${43.65}&lon=${79.38}&appid=${key}`);
-    const result = response.data;
+    const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?units=metric&lat=${43.65}&lon=${-79.38}&appid=${key}`)
+    const result = response.data
     console.log(result)
-    res.render("index.ejs", { data: result });
+    const temp = result.main.temp
+    const atmosphere = result.weather[0].main
+    let wear = ""
+    if (atmosphere === "Rain" || atmosphere === "Drizzle" || atmosphere === "Thunderstorm") {
+      wear = "Waterproof Jacket"
+    } else if (atmosphere === "Snow") {
+      wear = "Winter Jacket"
+    } else {
+      wear = "Normal Wear"
+    }
+    res.render("index.ejs", { temp: temp, wear: wear })
   } catch (error) {
-    res.render("index.ejs", { error: error.message });
+    res.render("index.ejs", { error: error.message })
   }
-});
+})
 
 app.listen(port, () => {
-  console.log(`Server running on port: ${port}`);
-});
+  console.log(`Server running on port: ${port}`)
+})

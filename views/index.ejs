@@ -9,9 +9,17 @@
 </head>
 
 <body>
+
+  <form action="/location" method="POST">
+    <input type="text" name="city">
+    <input type="text" name="country">
+    <button>Submit</button>
+  </form>
+
   <% if (locals) { %>
-    <p><%=locals.temp%></p>
-    <p><%=locals.wear%></p>
+    <p>Location: <%=locals.location%></p>
+    <p>Temperature: <%=locals.temp%></p>
+    <p>You should wear: <%=locals.wear%></p>
   <% } %>
 </body>
 
